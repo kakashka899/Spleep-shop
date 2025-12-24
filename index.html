@@ -1,0 +1,47 @@
+DOCTYPE html><html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Splin Shop</title>
+<style>
+body { font-family: Arial; background:#111; color:#eee; }
+h1 { text-align:center; }
+.shop { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:15px; padding:20px; }
+.card { background:#1f1f1f; border-radius:12px; padding:15px; box-shadow:0 4px 10px rgba(0,0,0,.5); }
+.card h3 { margin:0 0 10px; }
+.price { color:#00ff88; font-weight:bold; }
+body{background:url('https://i.imgur.com/8Qf8Y5Z.png') repeat, #050b1a;}
+header{display:flex;justify-content:space-between;align-items:center;padding:10px 20px;}
+.admin{background:#111;border:2px solid #00ff88;border-radius:10px;padding:10px;max-width:300px;}
+input,select{width:100%;margin:5px 0;padding:5px;border-radius:5px;}
+button{background:#00ff88;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;}
+</style>
+</head>
+<body>
+<header><h1>🛒 Splin Shop</h1><div style="color:#00ff88;font-weight:bold;">Координаты: -1500 60 1300</div></header>
+<div class="admin">
+<h3>Админ панель</h3>
+<input id="name" placeholder="Название">
+<input id="price" type="number" placeholder="Цена">
+<input id="stock" type="number" placeholder="В наличии">
+<input id="cat" placeholder="Категория">
+<input id="icon" placeholder="Иконка">
+<button onclick="addItem()">Добавить товар</button>
+</div>
+<div style="position:fixed; top:15px; right:20px; color:#00ff88; font-weight:bold;">Координаты магазина: -1500 60 1300</div>
+<h1>🛒 Splin Shop</h1>
+<div class="shop" id="shop"></div>
+<script>
+const inventory = [
+  { name: "Фейерверки", price: 1, stock: 18, category: "Ресурсы", icon: "🎆" },
+  { name: "Золотая морковь", price: 2, stock: 12, category: "Еда", icon: "🥕" },
+  { name: "Алмазный меч", price: 1200, stock: 5 },
+  { name: "Элитры", price: 3000, stock: 2 },
+  { name: "Зачарованное яблоко", price: 500, stock: 10 }
+];const shop = document.getElementById('shop');
+
+function render() { shop.innerHTML = ""; const categories = [...new Set(inventory.map(i=>i.category))]; categories.forEach(cat=>{ const title=document.createElement('h2'); title.textContent=cat; shop.appendChild(title); inventory.filter(i=>i.category===cat).forEach(item=>{(item => { const card = document.createElement('div'); card.className = 'card'; card.innerHTML = <h3>${item.name}</h3> <div>В наличии: ${item.stock}</div> <div class="price">Цена: ${item.price} монет</div>; shop.appendChild(card); }); }); }); }
+
+render(); function addItem(){ inventory.push({name:name.value,price:+price.value,stock:+stock.value,category:cat.value,icon:icon.value}); render(); } </script>
+
+</body>
+</html>
